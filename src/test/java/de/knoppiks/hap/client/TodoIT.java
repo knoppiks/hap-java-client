@@ -41,7 +41,6 @@ public class TodoIT {
         HapEntity entity = CLIENT.fetch(TEST_URL);
 
         Map<?, ?> data = (Map<?, ?>) entity.getData();
-        assertThat(data).hasSize(2);
         assertThat(data).containsKey(keyword("name"));
         assertThat(data).containsKey(keyword("version"));
 
