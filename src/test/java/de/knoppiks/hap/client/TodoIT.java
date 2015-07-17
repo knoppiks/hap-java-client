@@ -37,7 +37,7 @@ public class TodoIT {
     }
 
     @Test
-    public void simpleClient() throws Exception {
+    public void fetchServiceDocument() throws Exception {
         HapEntity entity = CLIENT.fetch(TEST_URL);
 
         Map<?, ?> data = (Map<?, ?>) entity.getData();
@@ -45,9 +45,7 @@ public class TodoIT {
         assertThat(data).containsKey(keyword("version"));
 
         assertThat(entity.getForm(keyword("todo/create-item"))).isPresent();
-        assertThat(entity.getForm(
-                keyword("todo/create-item")).get().getTitle()).hasValue(
-                "Create Item");
+        assertThat(entity.getForm(keyword("todo/create-item")).get().getTitle()).hasValue("Create Item");
     }
 
     @Test
