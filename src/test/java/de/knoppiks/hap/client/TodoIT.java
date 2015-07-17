@@ -16,8 +16,7 @@ import static java.lang.System.getProperty;
 import static org.apache.http.impl.client.HttpClients.createDefault;
 
 /**
- * This test depends on <a href="https://github.com/alexanderkiel/hap-todo">https://github.com/alexanderkiel/hap-todo
- * </a>. As the example hap-todo API is in ALPHA one should not rely on this test to stay stable.
+ * This test uses <a href="https://github.com/alexanderkiel/hap-todo">https://github.com/alexanderkiel/hap-todo</a>.
  *
  * @author <a href="mailto:jwagner@knoppiks.de">Jonas Wagner</a>
  */
