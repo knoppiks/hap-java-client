@@ -7,6 +7,7 @@ import org.apache.http.client.HttpClient;
  * @author <a href="mailto:jwagner@knoppiks.de">Jonas Wagner</a>
  */
 public final class Hap {
+
     private Hap() {
     }
 
