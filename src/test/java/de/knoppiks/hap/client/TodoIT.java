@@ -1,16 +1,12 @@
 package de.knoppiks.hap.client;
 
-import com.cognitect.transit.Keyword;
 import com.google.common.collect.ImmutableMap;
 import de.knoppiks.hap.client.model.Form;
 import de.knoppiks.hap.client.model.HapEntity;
 import de.knoppiks.hap.client.model.Link;
-import de.knoppiks.hap.client.parser.ParseException;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.net.URI;
-import java.util.List;
 import java.util.Map;
 
 import static com.cognitect.transit.TransitFactory.Format.JSON;
@@ -27,14 +23,10 @@ import static org.apache.http.impl.client.HttpClients.createDefault;
  */
 public class TodoIT {
 
-    private static final HapClient CLIENT = Hap.createClient(
-            createDefault(), JSON);
+    private static final HapClient CLIENT = Hap.createClient(createDefault(), JSON);
     private static final URI TEST_URL = URI.create(getProperty("test.url"));
-
-    private static List<HapEntity> getTodoItems(Link items)
-            throws IOException, ParseException, WrongContentTypeException {
-        return CLIENT.fetch(items).getEmbedded(keyword("todo/items"));
-    }
+    private static final String CREATE_ITEM = "todo/create-item";
+    private static final String ITEM_STATE = "todo/item-state";
 
     @Test
     public void fetchServiceDocument() throws Exception {
@@ -44,40 +36,41 @@ public class TodoIT {
         assertThat(data).containsKey(keyword("name"));
         assertThat(data).containsKey(keyword("version"));
 
-        assertThat(entity.getForm(keyword("todo/create-item"))).isPresent();
-        assertThat(entity.getForm(keyword("todo/create-item")).get().getTitle()).hasValue("Create Item");
+        assertThat(entity.getForm(keyword(CREATE_ITEM))).isPresent();
+        assertThat(entity.getForm(keyword(CREATE_ITEM)).get().getTitle()).hasValue("Create Item");
+    }
+
+    @Test
+    public void createAndDelete() throws Exception {
+        HapEntity serviceDoc = CLIENT.fetch(TEST_URL);
+
+        assertThat(serviceDoc.getForm(keyword(CREATE_ITEM))).isPresent();
+        Form form = serviceDoc.getForm(keyword(CREATE_ITEM)).get();
+        URI itemUri = CLIENT.create(RequestBuilders.create(form).put(keyword("label"), "label-222612"));
+
+        HapEntity item = CLIENT.fetch(itemUri);
+        assertThat((Map<?, ?>) item.getData()).containsEntry(keyword("label"), "label-222612");
+
+        CLIENT.delete(itemUri);
     }
 
     @Test
     public void createUpdateAndDelete() throws Exception {
-        HapEntity entity = CLIENT.fetch(TEST_URL);
+        HapEntity serviceDoc = CLIENT.fetch(TEST_URL);
 
-        assertThat(entity.getLinks(keyword("todo/items"))).isNotEmpty();
-        Link items = entity.getLinks(keyword("todo/items")).get(0);
-        int size = getTodoItems(items).size();
+        assertThat(serviceDoc.getForm(keyword(CREATE_ITEM))).isPresent();
+        Form form = serviceDoc.getForm(keyword(CREATE_ITEM)).get();
+        URI itemUri = CLIENT.create(RequestBuilders.create(form).put(keyword("label"), "label-222612"));
 
-        Form form = entity.getForm(keyword("todo/create-item")).get();
-        URI created = CLIENT.create(
-                RequestBuilders.create(form).put(keyword("label"),
-                        "label-222612"));
-        assertThat(getTodoItems(items)).hasSize(size + 1);
+        HapEntity item = CLIENT.fetch(itemUri);
 
-        HapEntity item = CLIENT.fetch(created);
-        HapEntity itemState = CLIENT.fetch(item.getLinks(keyword("todo/item-state")).get(0));
+        assertThat(item.getLinks(keyword(ITEM_STATE))).isNotEmpty();
+        Link itemStateUri = item.getLinks(keyword(ITEM_STATE)).get(0);
 
-        Keyword state = (Keyword) ((Map<?, ?>) item.getData()).get(keyword("state"));
+        HapEntity itemState = CLIENT.fetch(itemStateUri);
 
-        CLIENT.update(itemState
-                .setData(ImmutableMap.of(keyword("state"), toggleState(state))));
+        CLIENT.update(itemState.setData(ImmutableMap.of(keyword("state"), keyword("completed"))));
 
-        assertThat(((Map<?, ?>) CLIENT.fetch(created).getData()).get(keyword("state"))).isNotEqualTo(state);
-
-        CLIENT.delete(created);
-
-        assertThat(getTodoItems(items)).hasSize(size);
-    }
-
-    private Keyword toggleState(Keyword current) {
-        return current.equals(keyword("active")) ? keyword("completed") : keyword("active");
+        CLIENT.delete(itemUri);
     }
 }
