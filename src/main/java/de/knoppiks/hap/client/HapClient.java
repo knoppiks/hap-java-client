@@ -51,8 +51,8 @@ public interface HapClient {
     void delete(Link link) throws ParseException, WrongContentTypeException, IOException;
 
     /* Update */
-    void update(HapEntity newHapEntity) throws ParseException, WrongContentTypeException, IOException;
+    HapEntity update(HapEntity newHapEntity) throws ParseException, WrongContentTypeException, IOException;
 
-    void update(HapEntity newHapEntity, List<Header> headers)
+    HapEntity update(HapEntity newHapEntity, List<Header> headers)
             throws ParseException, WrongContentTypeException, IOException;
 }

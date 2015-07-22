@@ -24,6 +24,7 @@ import static com.cognitect.transit.TransitFactory.keyword;
 import static com.cognitect.transit.TransitFactory.writer;
 import static com.google.common.net.HttpHeaders.LOCATION;
 import static de.knoppiks.hap.client.MediaTypes.fromFormat;
+import static de.knoppiks.hap.client.model.Operation.UPDATE;
 import static de.knoppiks.hap.client.model.Serializer.serialize;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_CREATED;
@@ -142,17 +143,20 @@ public class HapClientImpl implements HapClient {
     }
 
     @Override
-    public void update(HapEntity newHapEntity)
+    public HapEntity update(HapEntity newHapEntity)
             throws ParseException, WrongContentTypeException, IOException {
-        update(newHapEntity, ImmutableList.<Header>of());
+        return update(newHapEntity, ImmutableList.<Header>of());
     }
 
     @Override
-    public void update(HapEntity newHapEntity, List<Header> headers)
+    public HapEntity update(HapEntity newHapEntity, List<Header> headers)
             throws ParseException, WrongContentTypeException, IOException {
-        HttpPut post = new HttpPut(newHapEntity.getLinks(keyword("self")).get(0).getHref());
+        URI selfLink = newHapEntity.getLinks(keyword("self")).get(0).getHref();
+
+        HttpPut post = new HttpPut(selfLink);
         post.addHeader(HttpHeaders.CONTENT_TYPE, fromFormat(format));
-        if (newHapEntity.getETag().isPresent()) {
+
+        if (newHapEntity.getETag().isPresent() && newHapEntity.operationAllowed(UPDATE)) {
             post.addHeader(HttpHeaders.IF_MATCH, newHapEntity.getETag().get());
         } else {
             throw new IllegalArgumentException("The HapEntity is not editable.");
@@ -165,5 +169,7 @@ public class HapClientImpl implements HapClient {
 
         HapHttpResponse response = client.execute(post, headers);
         checkStatus(response, "Update", SC_NO_CONTENT);
+
+        return fetch(selfLink);
     }
 }
