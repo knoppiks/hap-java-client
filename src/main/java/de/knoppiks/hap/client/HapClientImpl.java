@@ -57,6 +57,16 @@ public class HapClientImpl implements HapClient {
         }
     }
 
+    private static HapEntity checkEntityExists(HapHttpResponse response, final String action) {
+        Optional<HapEntity> entity = response.getEntity();
+        if (entity.isPresent()) {
+            return entity.get();
+        } else {
+            throw new IllegalStateException(format("%s must return an response but the response was %s.",
+                    action, response.getResponse()));
+        }
+    }
+
     @Override
     public HapEntity fetch(URI uri) throws ParseException, WrongContentTypeException, IOException {
         return fetch(uri, ImmutableList.<Header>of());
@@ -66,16 +76,6 @@ public class HapClientImpl implements HapClient {
     public HapEntity fetch(URI uri, List<Header> headers)
             throws ParseException, WrongContentTypeException, IOException {
         return checkEntityExists(client.execute(new HttpGet(uri), headers), "Fetch");
-    }
-
-    private HapEntity checkEntityExists(HapHttpResponse response, final String action) {
-        Optional<HapEntity> entity = response.getEntity();
-        if (entity.isPresent()) {
-            return entity.get();
-        } else {
-            throw new IllegalStateException(format("%s must return an response but the response was %s.",
-                    action, response.getResponse()));
-        }
     }
 
     @Override
