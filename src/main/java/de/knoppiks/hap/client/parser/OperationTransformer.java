@@ -4,7 +4,7 @@ import com.cognitect.transit.Keyword;
 import com.google.common.base.Optional;
 import de.knoppiks.hap.client.model.Operation;
 
-import static de.knoppiks.hap.client.model.Operations.operationKeywords;
+import static de.knoppiks.hap.client.model.Operations.operations;
 import static de.knoppiks.hap.client.model.Operations.toOperation;
 import static java.lang.String.format;
 
@@ -21,7 +21,7 @@ class OperationTransformer extends Transformer<Operation> {
                 return operation.get();
             } else {
                 throw new TransformException(format("Operation must be one of %s but was %s.",
-                        operationKeywords(), obj.toString()));
+                        operations(), obj.toString()));
             }
         } else {
             throw new TransformException("Operation must be a keyword, but was: " + obj.getClass());
