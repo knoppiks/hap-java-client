@@ -4,7 +4,6 @@ import com.cognitect.transit.Keyword;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
 
@@ -14,6 +13,7 @@ import java.util.Set;
 
 import static com.google.common.collect.ImmutableSet.copyOf;
 import static com.google.common.collect.Iterables.transform;
+import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Maps.transformValues;
 import static com.google.common.collect.Multimaps.transformValues;
 
@@ -124,14 +124,10 @@ public final class Serializer {
      */
     private static class NonEmptyValueMapBuilder {
 
-        private final ImmutableMap<Object, Object> map;
+        private final Map<Object, Object> map;
 
         NonEmptyValueMapBuilder() {
-            this.map = ImmutableMap.of();
-        }
-
-        NonEmptyValueMapBuilder(ImmutableMap<Object, Object> map) {
-            this.map = map;
+            this.map = newHashMap();
         }
 
         NonEmptyValueMapBuilder put(Keyword key, Object value) {
@@ -141,29 +137,33 @@ public final class Serializer {
                 return put(key, (Optional<?>) value);
             } else if (value instanceof Map<?, ?>) {
                 return put(key, (Map<?, ?>) value);
-            } else if (value instanceof Set<?>) {
-                return put(key, (Set<?>) value);
+            } else if (value instanceof Collection<?>) {
+                return put(key, (Collection<?>) value);
             } else {
-                return new NonEmptyValueMapBuilder(ImmutableMap.builder().putAll(map).put(key, value).build());
+                map.put(key, value);
+                return this;
             }
         }
 
         NonEmptyValueMapBuilder put(Keyword key, Map<?, ?> value) {
-            return value.isEmpty()
-                    ? this
-                    : new NonEmptyValueMapBuilder(ImmutableMap.builder().putAll(map).put(key, value).build());
+            if (!value.isEmpty()) {
+                map.put(key, value);
+            }
+            return this;
         }
 
         NonEmptyValueMapBuilder put(Keyword key, Collection<?> value) {
-            return value.isEmpty()
-                    ? this
-                    : new NonEmptyValueMapBuilder(ImmutableMap.builder().putAll(map).put(key, value).build());
+            if (!value.isEmpty()) {
+                map.put(key, value);
+            }
+            return this;
         }
 
         NonEmptyValueMapBuilder put(Keyword key, Optional<?> value) {
-            return !value.isPresent()
-                    ? this
-                    : new NonEmptyValueMapBuilder(ImmutableMap.builder().putAll(map).put(key, value.get()).build());
+            if (value.isPresent()) {
+                map.put(key, value.get());
+            }
+            return this;
         }
 
         Map<?, ?> build() {
