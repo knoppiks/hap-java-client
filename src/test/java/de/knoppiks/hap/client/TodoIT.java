@@ -1,6 +1,5 @@
 package de.knoppiks.hap.client;
 
-import com.google.common.collect.ImmutableMap;
 import de.knoppiks.hap.client.model.Form;
 import de.knoppiks.hap.client.model.HapEntity;
 import de.knoppiks.hap.client.model.Link;
@@ -11,6 +10,7 @@ import java.util.Map;
 
 import static com.cognitect.transit.TransitFactory.Format.JSON;
 import static com.cognitect.transit.TransitFactory.keyword;
+import static com.google.common.collect.ImmutableMap.of;
 import static com.google.common.truth.Truth.assertThat;
 import static java.lang.System.getProperty;
 import static org.apache.http.impl.client.HttpClients.createDefault;
@@ -68,7 +68,7 @@ public class TodoIT {
 
         HapEntity itemState = CLIENT.fetch(itemStateUri);
 
-        CLIENT.update(itemState.setData(ImmutableMap.of(keyword("state"), keyword("completed"))));
+        CLIENT.update(itemState.updateData(of(keyword("state"), keyword("completed"))));
 
         CLIENT.delete(itemUri);
     }

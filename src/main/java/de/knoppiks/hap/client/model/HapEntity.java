@@ -19,6 +19,7 @@ import static com.google.common.base.Predicates.equalTo;
 import static com.google.common.base.Predicates.not;
 import static com.google.common.collect.ImmutableListMultimap.copyOf;
 import static com.google.common.collect.ImmutableMap.copyOf;
+import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Multimaps.filterKeys;
 
 /**
@@ -51,6 +52,26 @@ public class HapEntity {
         this.operations = ImmutableSet.copyOf(operations);
         this.data = data;
         this.eTag = eTag;
+    }
+
+    /**
+     * Merge b into a.
+     */
+    @SuppressWarnings("unchecked")
+    private static Object merge(Object i, Object f) {
+        if (Map.class.isInstance(i) && Map.class.isInstance(f)) {
+            Map<Object, Object> into = newHashMap((Map<Object, Object>) i), from = (Map<Object, Object>) f;
+            for (Map.Entry<Object, Object> entry : from.entrySet()) {
+                if (into.containsKey(entry.getKey())) {
+                    into.put(entry.getKey(), merge(into.get(entry.getKey()), entry.getValue()));
+                } else {
+                    into.put(entry.getKey(), entry.getValue());
+                }
+            }
+            return into;
+        } else {
+            return f;
+        }
     }
 
     ImmutableMap<Keyword, Query> getQueries() {
@@ -91,8 +112,8 @@ public class HapEntity {
         return data;
     }
 
-    public HapEntity setData(Object data) {
-        return new HapEntity(queries, forms, links, embedded, operations, data, eTag);
+    public HapEntity updateData(Object data) {
+        return new HapEntity(queries, forms, links, embedded, operations, merge(this.data, data), eTag);
     }
 
     ImmutableMultimap<Keyword, HapEntity> getEmbedded() {
