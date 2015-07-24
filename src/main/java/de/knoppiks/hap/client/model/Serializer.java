@@ -119,8 +119,8 @@ public final class Serializer {
     }
 
     /**
-     * A MapBuilder accepting but not putting (key, value) pairs with empty values. Values are considered empty if they
-     * are {@link Optional#absent()}, empty {@link Map Maps}, empty {@link Collection Collections} or {@code null}.
+     * A MapBuilder ignoring (key, value) pairs with empty values. Values are considered empty if they are {@link
+     * Optional#absent()}, empty {@link Map Maps}, empty {@link Collection Collections} or {@code null}.
      */
     private static class NonEmptyValueMapBuilder {
 
