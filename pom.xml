@@ -12,6 +12,13 @@
     <description>A Java library which implements a generic Hypermedia Application Protocol (HAP) Client.</description>
     <url>https://github.com/knoppiks/hap-java-client</url>
 
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
     <properties>
         <httpclient.version>4.3.1</httpclient.version>
         <maven.compiler.source>1.7</maven.compiler.source>
