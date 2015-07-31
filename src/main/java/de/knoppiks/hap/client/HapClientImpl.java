@@ -33,7 +33,7 @@ import static org.apache.http.HttpStatus.SC_NO_CONTENT;
 /**
  * @author <a href="mailto:jwagner@knoppiks.de">Jonas Wagner</a>
  */
-public class HapClientImpl implements HapClient {
+class HapClientImpl implements HapClient {
 
     private final Format format;
     private final HapHttpClient client;
