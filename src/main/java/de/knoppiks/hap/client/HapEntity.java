@@ -1,4 +1,4 @@
-package de.knoppiks.hap.client.model;
+package de.knoppiks.hap.client;
 
 import com.cognitect.transit.Keyword;
 import com.google.common.base.MoreObjects;
@@ -8,6 +8,10 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
+import de.knoppiks.hap.client.model.Form;
+import de.knoppiks.hap.client.model.Link;
+import de.knoppiks.hap.client.model.Operation;
+import de.knoppiks.hap.client.model.Query;
 
 import java.util.List;
 import java.util.Map;

@@ -4,7 +4,7 @@ import com.cognitect.transit.Keyword;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import de.knoppiks.hap.client.model.HapEntity;
+import de.knoppiks.hap.client.HapEntity;
 import org.junit.Test;
 
 import java.net.URI;
@@ -12,7 +12,7 @@ import java.net.URI;
 import static com.cognitect.transit.TransitFactory.keyword;
 import static com.google.common.collect.ImmutableMap.of;
 import static com.google.common.truth.Truth.assertThat;
-import static de.knoppiks.hap.client.model.HapEntity.OPERATIONS;
+import static de.knoppiks.hap.client.HapEntity.OPERATIONS;
 import static de.knoppiks.hap.client.model.Operation.DELETE;
 import static de.knoppiks.hap.client.model.Operation.UPDATE;
 

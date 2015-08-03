@@ -4,7 +4,7 @@ import com.cognitect.transit.Reader;
 import com.cognitect.transit.TransitFactory;
 import com.cognitect.transit.TransitFactory.Format;
 import com.google.common.base.Optional;
-import de.knoppiks.hap.client.model.HapEntity;
+import de.knoppiks.hap.client.HapEntity;
 
 import java.io.ByteArrayInputStream;
 import java.net.URI;

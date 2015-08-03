@@ -1,7 +1,6 @@
 package de.knoppiks.hap.client;
 
 import com.google.common.base.Optional;
-import de.knoppiks.hap.client.model.HapEntity;
 import org.apache.http.HttpResponse;
 
 import java.net.URI;

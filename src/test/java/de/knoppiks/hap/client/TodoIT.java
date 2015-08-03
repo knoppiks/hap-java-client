@@ -1,7 +1,6 @@
 package de.knoppiks.hap.client;
 
 import de.knoppiks.hap.client.model.Form;
-import de.knoppiks.hap.client.model.HapEntity;
 import de.knoppiks.hap.client.model.Link;
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
 package de.knoppiks.hap.client.parser;
 
 import com.google.common.base.Optional;
-import de.knoppiks.hap.client.model.HapEntity;
+import de.knoppiks.hap.client.HapEntity;
 import org.junit.Test;
 
 import java.net.URI;

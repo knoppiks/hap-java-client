@@ -1,4 +1,4 @@
-package de.knoppiks.hap.client.model;
+package de.knoppiks.hap.client;
 
 import com.cognitect.transit.Keyword;
 import com.google.common.base.Optional;
@@ -6,6 +6,10 @@ import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
+import de.knoppiks.hap.client.model.Form;
+import de.knoppiks.hap.client.model.Link;
+import de.knoppiks.hap.client.model.Operation;
+import de.knoppiks.hap.client.model.Query;
 import org.junit.Test;
 
 import java.net.URI;
@@ -14,7 +18,7 @@ import java.util.Map;
 
 import static com.cognitect.transit.TransitFactory.keyword;
 import static com.google.common.truth.Truth.assertThat;
-import static de.knoppiks.hap.client.model.Serializer.serialize;
+import static de.knoppiks.hap.client.Serializer.serialize;
 
 /**
  * @author <a href="mailto:jwagner@knoppiks.de">Jonas Wagner</a>

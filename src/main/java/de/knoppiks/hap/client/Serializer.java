@@ -1,4 +1,4 @@
-package de.knoppiks.hap.client.model;
+package de.knoppiks.hap.client;
 
 import com.cognitect.transit.Keyword;
 import com.google.common.base.Function;
@@ -6,6 +6,11 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
+import de.knoppiks.hap.client.model.AbstractExecutable;
+import de.knoppiks.hap.client.model.Link;
+import de.knoppiks.hap.client.model.Operation;
+import de.knoppiks.hap.client.model.Param;
+import de.knoppiks.hap.client.model.Query;
 
 import java.util.Collection;
 import java.util.Map;
@@ -20,7 +25,7 @@ import static com.google.common.collect.Multimaps.transformValues;
 /**
  * @author <a href="mailto:jwagner@knoppiks.de">Jonas Wagner</a>
  */
-public final class Serializer {
+final class Serializer {
 
     private static final Function<Param, Map<?, ?>> PARAM_SERIALIZER =
             new Function<Param, Map<?, ?>>() {
@@ -83,7 +88,7 @@ public final class Serializer {
 
     }
 
-    public static Map<?, ?> serialize(HapEntity entity) {
+    static Map<?, ?> serialize(HapEntity entity) {
         return builder()
                 .put(HapEntity.QUERIES, serializeExecutable(entity.getQueries()))
                 .put(HapEntity.FORMS, serializeExecutable(entity.getForms()))

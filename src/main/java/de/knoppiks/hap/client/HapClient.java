@@ -1,6 +1,5 @@
 package de.knoppiks.hap.client;
 
-import de.knoppiks.hap.client.model.HapEntity;
 import de.knoppiks.hap.client.model.Link;
 import de.knoppiks.hap.client.parser.ParseException;
 import org.apache.http.Header;
