@@ -2,6 +2,7 @@ package de.knoppiks.hap.client;
 
 import de.knoppiks.hap.client.model.Form;
 import de.knoppiks.hap.client.model.Link;
+import de.knoppiks.hap.client.model.Query;
 import org.junit.Test;
 
 import java.net.URI;
@@ -25,6 +26,8 @@ public class TodoIT {
     private static final URI TEST_URL = URI.create(getProperty("test.url"));
     private static final String CREATE_ITEM = "todo/create-item";
     private static final String ITEM_STATE = "todo/item-state";
+    private static final String FILTER_ITEM = "todo/filter-item";
+    private static final String ITEMS = "todo/items";
 
     @Test
     public void fetchServiceDocument() throws Exception {
@@ -48,6 +51,26 @@ public class TodoIT {
 
         HapEntity item = CLIENT.fetch(itemUri);
         assertThat((Map<?, ?>) item.getData()).containsEntry(keyword("label"), "label-222612");
+
+        CLIENT.delete(itemUri);
+    }
+
+    @Test
+    public void createQueryAndDelete() throws Exception {
+        HapEntity serviceDoc = CLIENT.fetch(TEST_URL);
+        String label = "0460941b-2114-4622-8f23-a85639f39278";
+
+        assertThat(serviceDoc.getForm(keyword(CREATE_ITEM))).isPresent();
+        Form form = serviceDoc.getForm(keyword(CREATE_ITEM)).get();
+        URI itemUri = CLIENT.create(RequestBuilders.create(form).put(keyword("label"), label));
+
+        assertThat(serviceDoc.getQuery(keyword(FILTER_ITEM))).isPresent();
+        Query filter = serviceDoc.getQuery(keyword(FILTER_ITEM)).get();
+        HapEntity filtered = CLIENT.execute(RequestBuilders.query(filter).put(keyword("label"), label));
+        assertThat(filtered.getEmbedded(keyword(ITEMS))).isNotEmpty();
+
+        HapEntity item = CLIENT.fetch(itemUri);
+        assertThat((Map<?, ?>) item.getData()).containsEntry(keyword("label"), label);
 
         CLIENT.delete(itemUri);
     }
