@@ -6,7 +6,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
-import de.knoppiks.hap.client.model.AbstractExecutable;
+import de.knoppiks.hap.client.model.Form;
 import de.knoppiks.hap.client.model.Link;
 import de.knoppiks.hap.client.model.Operation;
 import de.knoppiks.hap.client.model.Param;
@@ -38,10 +38,21 @@ final class Serializer {
                             .build();
                 }
             };
-    private static final Function<AbstractExecutable, Map<?, ?>> EXECUTABLE_SERIALIZER =
-            new Function<AbstractExecutable, Map<?, ?>>() {
+    private static final Function<Form, Map<?, ?>> FORM_SERIALIZER =
+            new Function<Form, Map<?, ?>>() {
                 @Override
-                public Map<?, ?> apply(AbstractExecutable executable) {
+                public Map<?, ?> apply(Form executable) {
+                    return builder()
+                            .put(Query.PARAMS, serializeParams(executable.getParams()))
+                            .put(Query.TARGET, executable.getTarget())
+                            .put(Query.TITLE, executable.getTitle())
+                            .build();
+                }
+            };
+    private static final Function<Query, Map<?, ?>> QUERY_SERIALIZER =
+            new Function<Query, Map<?, ?>>() {
+                @Override
+                public Map<?, ?> apply(Query executable) {
                     return builder()
                             .put(Query.PARAMS, serializeParams(executable.getParams()))
                             .put(Query.TARGET, executable.getTarget())
@@ -90,8 +101,8 @@ final class Serializer {
 
     static Map<?, ?> serialize(HapEntity entity) {
         return builder()
-                .put(HapEntity.QUERIES, serializeExecutable(entity.getQueries()))
-                .put(HapEntity.FORMS, serializeExecutable(entity.getForms()))
+                .put(HapEntity.QUERIES, serializeQueries(entity.getQueries()))
+                .put(HapEntity.FORMS, serializeForms(entity.getForms()))
                 .put(HapEntity.LINKS, serializeLinks(entity.getLinks()))
                 .put(HapEntity.EMBEDDED, serializeEmbedded(entity.getEmbedded()))
                 .put(HapEntity.OPERATIONS, serializeOperations(entity.getOperations()))
@@ -99,8 +110,12 @@ final class Serializer {
                 .build();
     }
 
-    private static Map<?, ?> serializeExecutable(final Map<Keyword, ? extends AbstractExecutable> queries) {
-        return transformValues(queries, EXECUTABLE_SERIALIZER);
+    private static Map<?, ?> serializeQueries(final Map<Keyword, Query> queries) {
+        return transformValues(queries, QUERY_SERIALIZER);
+    }
+
+    private static Map<?, ?> serializeForms(final Map<Keyword, Form> forms) {
+        return transformValues(forms, FORM_SERIALIZER);
     }
 
     private static Map<?, ?> serializeParams(Map<Keyword, Param> params) {

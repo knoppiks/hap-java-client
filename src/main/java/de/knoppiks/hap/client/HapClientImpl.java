@@ -5,7 +5,9 @@ import com.cognitect.transit.TransitFactory.Format;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.net.HttpHeaders;
+import de.knoppiks.hap.client.model.Form;
 import de.knoppiks.hap.client.model.Link;
+import de.knoppiks.hap.client.model.Query;
 import de.knoppiks.hap.client.parser.ParseException;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -89,25 +91,25 @@ class HapClientImpl implements HapClient {
     }
 
     @Override
-    public HapEntity execute(QueryRequestBuilder request)
+    public HapEntity execute(RequestBuilder<Query> request)
             throws ParseException, WrongContentTypeException, IOException {
         return execute(request, ImmutableList.<Header>of());
     }
 
     @Override
-    public HapEntity execute(QueryRequestBuilder request, List<Header> headers)
+    public HapEntity execute(RequestBuilder<Query> request, List<Header> headers)
             throws ParseException, WrongContentTypeException, IOException {
         return checkEntityExists(client.execute(request.build(format), headers), "Execute");
     }
 
     @Override
-    public URI create(CreateRequestBuilder request)
+    public URI create(RequestBuilder<Form> request)
             throws ParseException, WrongContentTypeException, IOException {
         return create(request, ImmutableList.<Header>of());
     }
 
     @Override
-    public URI create(CreateRequestBuilder request, List<Header> headers)
+    public URI create(RequestBuilder<Form> request, List<Header> headers)
             throws ParseException, WrongContentTypeException, IOException {
         HapHttpResponse response = client.execute(request.build(format), headers);
 

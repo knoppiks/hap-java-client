@@ -17,7 +17,7 @@ import static com.cognitect.transit.TransitFactory.writer;
 /**
  * @author <a href="mailto:jwagner@knoppiks.de">Jonas Wagner</a>
  */
-public class QueryRequestBuilder extends RequestBuilder {
+class QueryRequestBuilder extends RequestBuilder<Query> {
 
     private final Query query;
     private final ImmutableMap<Keyword, Object> params;
@@ -27,6 +27,7 @@ public class QueryRequestBuilder extends RequestBuilder {
         this.params = params;
     }
 
+    @Override
     public QueryRequestBuilder put(Keyword param, Object value) {
         return new QueryRequestBuilder(query,
                 ImmutableMap.<Keyword, Object>builder().putAll(params).put(param, value).build());
@@ -42,8 +43,7 @@ public class QueryRequestBuilder extends RequestBuilder {
         try {
             return new HttpGet(uriBuilder.build());
         } catch (URISyntaxException e) {
-            throw new RuntimeException(
-                    "Unexpected URISyntaxException while building the GEt request URI: "
+            throw new RuntimeException("Unexpected URISyntaxException while building the GEt request URI: "
                             + e.getMessage(), e);
         }
     }

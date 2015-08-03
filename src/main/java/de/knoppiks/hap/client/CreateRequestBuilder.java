@@ -17,7 +17,7 @@ import static de.knoppiks.hap.client.MediaTypes.fromFormat;
 /**
  * @author <a href="mailto:jwagner@knoppiks.de">Jonas Wagner</a>
  */
-public class CreateRequestBuilder extends RequestBuilder {
+class CreateRequestBuilder extends RequestBuilder<Form> {
 
     private final Form form;
     private final ImmutableMap<Keyword, Object> params;
@@ -27,6 +27,7 @@ public class CreateRequestBuilder extends RequestBuilder {
         this.params = params;
     }
 
+    @Override
     public CreateRequestBuilder put(Keyword param, Object value) {
         return new CreateRequestBuilder(form, ImmutableMap.<Keyword, Object>builder()
                 .putAll(params).put(param, value).build());

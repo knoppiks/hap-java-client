@@ -13,11 +13,11 @@ public final class RequestBuilders {
     private RequestBuilders() {
     }
 
-    public static CreateRequestBuilder create(final Form form) {
+    public static RequestBuilder<Form> create(final Form form) {
         return new CreateRequestBuilder(form, ImmutableMap.<Keyword, Object>of());
     }
 
-    public static QueryRequestBuilder query(final Query query) {
+    public static RequestBuilder<Query> query(final Query query) {
         return new QueryRequestBuilder(query, ImmutableMap.<Keyword, Object>of());
     }
 }

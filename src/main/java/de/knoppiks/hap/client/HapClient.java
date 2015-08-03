@@ -1,6 +1,8 @@
 package de.knoppiks.hap.client;
 
+import de.knoppiks.hap.client.model.Form;
 import de.knoppiks.hap.client.model.Link;
+import de.knoppiks.hap.client.model.Query;
 import de.knoppiks.hap.client.parser.ParseException;
 import org.apache.http.Header;
 
@@ -25,17 +27,17 @@ public interface HapClient {
             throws ParseException, WrongContentTypeException, IOException;
 
     /* Execute - get with params */
-    HapEntity execute(QueryRequestBuilder request)
+    HapEntity execute(RequestBuilder<Query> request)
             throws ParseException, WrongContentTypeException, IOException;
 
-    HapEntity execute(QueryRequestBuilder request, List<Header> headers)
+    HapEntity execute(RequestBuilder<Query> request, List<Header> headers)
             throws ParseException, WrongContentTypeException, IOException;
 
     /* Create - post */
-    URI create(CreateRequestBuilder request)
+    URI create(RequestBuilder<Form> request)
             throws ParseException, WrongContentTypeException, IOException;
 
-    URI create(CreateRequestBuilder request, List<Header> headers)
+    URI create(RequestBuilder<Form> request, List<Header> headers)
             throws ParseException, WrongContentTypeException, IOException;
 
     /* Delete */

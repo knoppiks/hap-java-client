@@ -1,9 +1,7 @@
 package de.knoppiks.hap.client.model;
 
 import com.cognitect.transit.Keyword;
-import com.cognitect.transit.TransitFactory.Format;
 import com.google.common.base.Optional;
-import org.apache.http.client.methods.HttpUriRequest;
 
 import java.net.URI;
 import java.util.Map;
@@ -14,7 +12,7 @@ import static com.google.common.collect.ImmutableMap.copyOf;
 /**
  * @author <a href="mailto:jwagner@knoppiks.de">Jonas Wagner</a>
  */
-public abstract class AbstractExecutable {
+abstract class AbstractExecutable {
 
     private final URI target;
     private final Map<Keyword, Param> params;
