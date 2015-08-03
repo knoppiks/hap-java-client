@@ -12,13 +12,13 @@ import static com.google.common.collect.ImmutableMap.copyOf;
 /**
  * @author <a href="mailto:jwagner@knoppiks.de">Jonas Wagner</a>
  */
-abstract class AbstractExecutable {
+final class Executable {
 
     private final URI target;
     private final Map<Keyword, Param> params;
     private final Optional<String> title;
 
-    public AbstractExecutable(URI target, Map<Keyword, Param> params, Optional<String> title) {
+    public Executable(URI target, Map<Keyword, Param> params, Optional<String> title) {
         this.target = target;
         this.params = params;
         this.title = title;
@@ -41,7 +41,7 @@ abstract class AbstractExecutable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        AbstractExecutable that = (AbstractExecutable) o;
+        Executable that = (Executable) o;
 
         if (!target.equals(that.target)) return false;
         if (!params.equals(that.params)) return false;
