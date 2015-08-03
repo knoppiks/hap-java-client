@@ -168,7 +168,15 @@ class HapClientImpl implements HapClient {
 
         HapHttpResponse response = client.execute(post, headers);
         checkStatus(response, "Update", SC_NO_CONTENT);
+        checkHeaderExists(response, "ETag");
 
-        return fetch(selfLink);
+        return new HapEntity(
+                newHapEntity.getQueries(),
+                newHapEntity.getForms(),
+                newHapEntity.getLinks(),
+                newHapEntity.getEmbedded(),
+                newHapEntity.getOperations(),
+                newHapEntity.getData(),
+                Optional.of(response.getResponse().getFirstHeader("ETag").getValue()));
     }
 }
