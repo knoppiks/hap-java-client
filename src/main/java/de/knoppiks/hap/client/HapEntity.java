@@ -141,6 +141,33 @@ public class HapEntity {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        HapEntity entity = (HapEntity) o;
+
+        if (!queries.equals(entity.queries)) return false;
+        if (!forms.equals(entity.forms)) return false;
+        if (!links.equals(entity.links)) return false;
+        if (!embedded.equals(entity.embedded)) return false;
+        if (!operations.equals(entity.operations)) return false;
+        return data.equals(entity.data);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = queries.hashCode();
+        result = 31 * result + forms.hashCode();
+        result = 31 * result + links.hashCode();
+        result = 31 * result + embedded.hashCode();
+        result = 31 * result + operations.hashCode();
+        result = 31 * result + data.hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add(QUERIES.toString(), queries)

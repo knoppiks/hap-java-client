@@ -37,6 +37,27 @@ abstract class AbstractExecutable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AbstractExecutable that = (AbstractExecutable) o;
+
+        if (!target.equals(that.target)) return false;
+        if (!params.equals(that.params)) return false;
+        return title.equals(that.title);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = target.hashCode();
+        result = 31 * result + params.hashCode();
+        result = 31 * result + title.hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return toStringHelper(this)
                 .add("target", target)

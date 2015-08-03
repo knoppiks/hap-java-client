@@ -34,6 +34,25 @@ public class Link {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Link link = (Link) o;
+
+        if (!href.equals(link.href)) return false;
+        return label.equals(link.label);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = href.hashCode();
+        result = 31 * result + label.hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("href", href)

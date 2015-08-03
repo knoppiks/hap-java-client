@@ -38,6 +38,27 @@ public class Param {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Param param = (Param) o;
+
+        if (optional != param.optional) return false;
+        if (!description.equals(param.description)) return false;
+        return type.equals(param.type);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = description.hashCode();
+        result = 31 * result + type.hashCode();
+        result = 31 * result + (optional ? 1 : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("description", description)
