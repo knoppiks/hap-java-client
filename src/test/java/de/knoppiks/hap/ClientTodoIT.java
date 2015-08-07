@@ -1,5 +1,9 @@
-package de.knoppiks.hap.client;
+package de.knoppiks.hap;
 
+import de.knoppiks.hap.client.Hap;
+import de.knoppiks.hap.client.HapClient;
+import de.knoppiks.hap.client.HapEntity;
+import de.knoppiks.hap.client.RequestBuilders;
 import de.knoppiks.hap.client.model.Form;
 import de.knoppiks.hap.client.model.Link;
 import de.knoppiks.hap.client.model.Query;
@@ -20,7 +24,7 @@ import static org.apache.http.impl.client.HttpClients.createDefault;
  *
  * @author <a href="mailto:jwagner@knoppiks.de">Jonas Wagner</a>
  */
-public class TodoIT {
+public class ClientTodoIT {
 
     private static final HapClient CLIENT = Hap.createClient(createDefault(), JSON);
     private static final URI TEST_URL = URI.create(getProperty("test.url"));
