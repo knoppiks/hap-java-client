@@ -32,6 +32,15 @@ public class QueryTransformerTest extends AbstractTransitTransformerTest<Query> 
         assertThat(query.getTarget()).isEqualTo(BASE_URI.resolve(uri));
     }
 
+    @Test(expected = TransformException.class)
+    public void withLabel() throws Exception {
+        String label = "label-150802";
+
+        Query query = transformer.transform(of(keyword("href"), "uri-182140", keyword("label"), label));
+
+        assertThat(query.getLabel()).hasValue(label);
+    }
+
     @Test
     public void withEmptyParams() throws Exception {
         String uri = "uri-014513";

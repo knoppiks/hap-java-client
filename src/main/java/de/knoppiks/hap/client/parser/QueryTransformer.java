@@ -39,7 +39,7 @@ class QueryTransformer extends Transformer<Query> {
 
         URI target = uriTransformer.transform(map.get(Query.TARGET));
         Map<Keyword, Param> params = keywordMapOf(new ParamTransformer()).transform(map.get(Query.PARAMS));
-        Optional<String> title = fromNullable(map.get(Query.TITLE)).transform(stringTransformer());
+        Optional<String> title = fromNullable(map.get(Query.LABEL)).transform(stringTransformer());
 
         return new Query(target, params, title);
     }

@@ -42,7 +42,7 @@ public class ClientTodoIT {
         assertThat(data).containsKey(keyword("version"));
 
         assertThat(entity.getForm(keyword(CREATE_ITEM))).isPresent();
-        assertThat(entity.getForm(keyword(CREATE_ITEM)).get().getTitle()).hasValue("Create Item");
+        assertThat(entity.getForm(keyword(CREATE_ITEM)).get().getLabel()).hasValue("Create Item");
     }
 
     @Test

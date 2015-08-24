@@ -6,6 +6,7 @@ import com.google.common.base.Optional;
 import java.net.URI;
 import java.util.Map;
 
+import static com.cognitect.transit.TransitFactory.keyword;
 import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.collect.ImmutableMap.copyOf;
 
@@ -14,14 +15,18 @@ import static com.google.common.collect.ImmutableMap.copyOf;
  */
 final class Executable {
 
+    protected static final Keyword LABEL = keyword("label");
+    protected static final Keyword TARGET = keyword("href");
+    protected static final Keyword PARAMS = keyword("params");
+
     private final URI target;
     private final Map<Keyword, Param> params;
-    private final Optional<String> title;
+    private final Optional<String> label;
 
-    public Executable(URI target, Map<Keyword, Param> params, Optional<String> title) {
+    public Executable(URI target, Map<Keyword, Param> params, Optional<String> label) {
         this.target = target;
         this.params = params;
-        this.title = title;
+        this.label = label;
     }
 
     public URI getTarget() {
@@ -32,8 +37,8 @@ final class Executable {
         return copyOf(params);
     }
 
-    public Optional<String> getTitle() {
-        return title;
+    public Optional<String> getLabel() {
+        return label;
     }
 
     @Override
@@ -45,7 +50,7 @@ final class Executable {
 
         if (!target.equals(that.target)) return false;
         if (!params.equals(that.params)) return false;
-        return title.equals(that.title);
+        return label.equals(that.label);
 
     }
 
@@ -53,7 +58,7 @@ final class Executable {
     public int hashCode() {
         int result = target.hashCode();
         result = 31 * result + params.hashCode();
-        result = 31 * result + title.hashCode();
+        result = 31 * result + label.hashCode();
         return result;
     }
 
@@ -62,7 +67,7 @@ final class Executable {
         return toStringHelper(this)
                 .add("target", target)
                 .add("params", params)
-                .add("title", title)
+                .add("label", label)
                 .toString();
     }
 }

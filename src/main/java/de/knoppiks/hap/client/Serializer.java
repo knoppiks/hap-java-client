@@ -45,7 +45,7 @@ final class Serializer {
                     return builder()
                             .put(Query.PARAMS, serializeParams(executable.getParams()))
                             .put(Query.TARGET, executable.getTarget())
-                            .put(Query.TITLE, executable.getTitle())
+                            .put(Query.LABEL, executable.getLabel())
                             .build();
                 }
             };
@@ -56,7 +56,7 @@ final class Serializer {
                     return builder()
                             .put(Query.PARAMS, serializeParams(executable.getParams()))
                             .put(Query.TARGET, executable.getTarget())
-                            .put(Query.TITLE, executable.getTitle())
+                            .put(Query.LABEL, executable.getLabel())
                             .build();
                 }
             };

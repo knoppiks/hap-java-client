@@ -39,7 +39,7 @@ class FormTransformer extends Transformer<Form> {
 
         URI target = uriTransformer.transform(map.get(Form.TARGET));
         Map<Keyword, Param> params = keywordMapOf(new ParamTransformer()).transform(map.get(Form.PARAMS));
-        Optional<String> title = fromNullable(map.get(Form.TITLE)).transform(stringTransformer());
+        Optional<String> title = fromNullable(map.get(Form.LABEL)).transform(stringTransformer());
 
         return new Form(target, params, title);
     }

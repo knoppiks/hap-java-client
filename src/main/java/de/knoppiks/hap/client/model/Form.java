@@ -6,16 +6,14 @@ import com.google.common.base.Optional;
 import java.net.URI;
 import java.util.Map;
 
-import static com.cognitect.transit.TransitFactory.keyword;
-
 /**
  * @author <a href="mailto:jwagner@knoppiks.de">Jonas Wagner</a>
  */
 public class Form {
 
-    public static final Keyword TARGET = keyword("href");
-    public static final Keyword PARAMS = keyword("params");
-    public static final Keyword TITLE = keyword("title");
+    public static final Keyword TARGET = Executable.TARGET;
+    public static final Keyword PARAMS = Executable.PARAMS;
+    public static final Keyword LABEL = Executable.LABEL;
 
     private final Executable executable;
 
@@ -31,8 +29,8 @@ public class Form {
         return executable.getParams();
     }
 
-    public Optional<String> getTitle() {
-        return executable.getTitle();
+    public Optional<String> getLabel() {
+        return executable.getLabel();
     }
 
     @Override

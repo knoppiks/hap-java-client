@@ -42,22 +42,22 @@ public class FormTransformerTest extends AbstractTransitTransformerTest<Form> {
 
         assertThat(form.getTarget()).isEqualTo(BASE_URI.resolve(uri));
         assertThat(form.getParams()).isEmpty();
-        assertThat(form.getTitle()).isAbsent();
+        assertThat(form.getLabel()).isAbsent();
     }
 
     @Test
-    public void withTitle() throws Exception {
+    public void withLabel() throws Exception {
         String uri = "uri-014513";
-        String title = "title-194614";
+        String label = "label-194614";
 
         Form form = transformer.transform(of(
                 keyword("href"), uri,
-                keyword("title"), title,
+                keyword("label"), label,
                 keyword("params"), of()));
 
         assertThat(form.getTarget()).isEqualTo(BASE_URI.resolve(uri));
         assertThat(form.getParams()).isEmpty();
-        assertThat(form.getTitle()).hasValue(title);
+        assertThat(form.getLabel()).hasValue(label);
     }
 
     @Test
@@ -80,12 +80,13 @@ public class FormTransformerTest extends AbstractTransitTransformerTest<Form> {
     @Test
     public void parseAndTransform() throws Exception {
         String uri = "uri-225104";
+        String label = "label-013749";
         String param = "param-203216";
         String type = "type-120224";
-        String title = "title-013749";
 
-        Form form = parse(format(resource("transit-form"), uri, title, param, type));
+        Form form = parse(format(resource("transit-form"), uri, label, param, type));
 
+        assertThat(form.getLabel()).hasValue(label);
         assertThat(form.getTarget()).isEqualTo(BASE_URI.resolve(uri));
         assertThat(form.getParams()).isNotEmpty();
         assertThat(form.getParams()).containsKey(keyword(param));
