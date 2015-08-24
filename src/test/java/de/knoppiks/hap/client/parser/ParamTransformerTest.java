@@ -24,36 +24,36 @@ public class ParamTransformerTest extends AbstractTransitTransformerTest<Param> 
         Param param = transformer.transform(of(
                 keyword("type"), type));
 
-        assertThat(param.getDescription()).isAbsent();
+        assertThat(param.getLabel()).isAbsent();
         assertThat(param.getType()).isEqualTo(type);
         assertThat(param.isOptional()).isFalse();
     }
 
     @Test
-    public void typeAndDescription() throws Exception {
+    public void typeAndLabel() throws Exception {
         String type = "type-043227";
-        String description = "description-055304";
+        String label = "label-055304";
 
         Param param = transformer.transform(of(
                 keyword("type"), type,
-                keyword("description"), description));
+                keyword("label"), label));
 
-        assertThat(param.getDescription()).hasValue(description);
+        assertThat(param.getLabel()).hasValue(label);
         assertThat(param.getType()).isEqualTo(type);
         assertThat(param.isOptional()).isFalse();
     }
 
     @Test
-    public void typeDescriptionOptional() throws Exception {
+    public void typeLabelOptional() throws Exception {
         String type = "type-032609";
-        String description = "description-210200";
+        String label = "label-210200";
 
         Param param = transformer.transform(of(
                 keyword("type"), type,
-                keyword("description"), description,
+                keyword("label"), label,
                 keyword("optional"), true));
 
-        assertThat(param.getDescription()).hasValue(description);
+        assertThat(param.getLabel()).hasValue(label);
         assertThat(param.getType()).isEqualTo(type);
         assertThat(param.isOptional()).isTrue();
     }
@@ -61,11 +61,11 @@ public class ParamTransformerTest extends AbstractTransitTransformerTest<Param> 
     @Test
     public void parseAndTransform() throws Exception {
         String type = "type-032026";
-        String description = "description-203309";
+        String label = "label-203309";
 
-        Param param = parse(format(resource("transit-param"), type, description, true));
+        Param param = parse(format(resource("transit-param"), type, label, true));
 
-        assertThat(param.getDescription()).hasValue(description);
+        assertThat(param.getLabel()).hasValue(label);
         assertThat(param.getType()).isEqualTo(type);
         assertThat(param.isOptional()).isTrue();
     }

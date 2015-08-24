@@ -18,7 +18,7 @@ class ParamTransformer extends Transformer<Param> {
     public Param transform(Object obj) throws TransformException {
         Map<?, ?> map = castToMap(obj);
 
-        Optional<String> description = fromNullable(map.get(Param.DESCRIPTION)).transform(stringTransformer());
+        Optional<String> description = fromNullable(map.get(Param.LABEL)).transform(stringTransformer());
         boolean optional = fromNullable((Boolean) map.get(Param.OPTIONAL)).or(false);
 
         return new Param(map.get(Param.TYPE).toString(), description, optional);

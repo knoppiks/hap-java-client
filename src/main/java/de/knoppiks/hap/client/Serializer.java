@@ -33,8 +33,8 @@ final class Serializer {
                 public Map<?, ?> apply(Param param) {
                     return builder()
                             .put(Param.TYPE, param.getType())
-                            .put(Param.DESCRIPTION, param.getDescription())
-                            .put(Param.OPTIONAL, param.getDescription())
+                            .put(Param.LABEL, param.getLabel())
+                            .put(Param.OPTIONAL, param.getLabel())
                             .build();
                 }
             };

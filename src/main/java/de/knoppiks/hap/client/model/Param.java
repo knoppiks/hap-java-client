@@ -12,21 +12,21 @@ import static com.cognitect.transit.TransitFactory.keyword;
 public class Param {
 
     public static final Keyword OPTIONAL = keyword("optional");
-    public static final Keyword DESCRIPTION = keyword("description");
+    public static final Keyword LABEL = keyword("label");
     public static final Keyword TYPE = keyword("type");
 
-    private final Optional<String> description;
+    private final Optional<String> label;
     private final String type;
     private boolean optional;
 
-    public Param(String type, Optional<String> description, boolean optional) {
-        this.description = description;
+    public Param(String type, Optional<String> label, boolean optional) {
+        this.label = label;
         this.type = type;
         this.optional = optional;
     }
 
-    public Optional<String> getDescription() {
-        return description;
+    public Optional<String> getLabel() {
+        return label;
     }
 
     public String getType() {
@@ -45,14 +45,14 @@ public class Param {
         Param param = (Param) o;
 
         if (optional != param.optional) return false;
-        if (!description.equals(param.description)) return false;
+        if (!label.equals(param.label)) return false;
         return type.equals(param.type);
 
     }
 
     @Override
     public int hashCode() {
-        int result = description.hashCode();
+        int result = label.hashCode();
         result = 31 * result + type.hashCode();
         result = 31 * result + (optional ? 1 : 0);
         return result;
@@ -61,7 +61,7 @@ public class Param {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("description", description)
+                .add("label", label)
                 .add("type", type)
                 .toString();
     }
