@@ -37,6 +37,8 @@
         <httpclient.version>4.3.1</httpclient.version>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -129,6 +131,7 @@
 
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.18.1</version>
                 <configuration>
                     <systemPropertyVariables>
                         <test.url>http://localhost:${todo.port}</test.url>
@@ -145,8 +148,8 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>2.4</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -158,8 +161,8 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.3</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
