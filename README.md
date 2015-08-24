@@ -5,6 +5,18 @@ __This software is ALPHA.__
 A Java library which implements a generic [Hypermedia Application Protocol (HAP)](https://github.com/alexanderkiel/hap-spec) 
 client.
 
+## Installation
+
+When using maven you can simply add the following dependency to your `pom.xml`.
+
+```xml
+<dependency>
+    <groupId>de.knoppiks</groupId>
+    <artifactId>hap-java-client</artifactId>
+    <version>0.1</version>
+</dependency>
+```
+
 ## Usage
 
 Examples for all Methods the HapClient offers can be found in the `ClientTodoIT` in the *src/test/* directory.
